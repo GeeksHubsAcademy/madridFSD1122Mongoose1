@@ -10,7 +10,8 @@ const CarsController = require('../controllers/CarsController');
 
 router.get("/", CarsController.getAllCars);
 router.post("/", CarsController.newCar);
-
+router.put("/", CarsController.updateCar);
+router.delete("/", CarsController.deleteCar);
 
 
 //Exporto router para que pueda ser importado desde otros ficheros una vez ha ejecutado la lógica de éste(siempre igual)

@@ -8,8 +8,14 @@ const dbconnect = require("./db/dbconnect");
 
 const PORT = 5500;
 
-// //Endpoints
-// app.get("/", (req,res)=> res.send({"coworking": "talent garden"}))
+//Importo fichero ./router
+const router = require('./router');
+
+//Middlewares
+//Para poder usar json
+app.use(express.json());
+
+app.use(router);
 
 //Me conecto a la base de datos
 dbconnect();

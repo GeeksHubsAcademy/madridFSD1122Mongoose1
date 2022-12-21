@@ -8,15 +8,32 @@ const userSchema = new Schema ({
         required: true
     },
     surname: {
-        type: String,
-        required: true
+        type: String
     },
     dni: {
         type: String,
         required: true,
         unique: true,
         immutable: true
+    },
+    email : {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
+    },
+    password : {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: Number
+
+    },
+    nationality: {
+        type: String
     }
+
 });
 
 const User = mongoose.model("User", userSchema);

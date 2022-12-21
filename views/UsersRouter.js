@@ -16,6 +16,8 @@ router.post("/", UsersController.newUser);
 router.put("/", UsersController.updateUser);
 router.delete("/", UsersController.deleteUser);
 
+router.post("/login", UsersController.loginUser);
+
 
 //Exporto router para que pueda ser importado desde otros ficheros una vez ha ejecutado la lógica de éste(siempre igual)
 module.exports = router;

@@ -6,11 +6,14 @@ const CarsController = {};
 CarsController.getAllCars = async (req, res) => {
 
     try {
-        await Car.find({})
-            .then(cars => {
+        let cars = await Car.find({});
 
-                res.send(cars)
-            })
+        if(cars.length > 0){
+            res.send(cars)
+        } else {
+            res.send({"Message":"Lo sentimos, no hemos encontrado ningún coche."})
+        }
+
     } catch (error) {
         console.log(error);
     }
@@ -19,31 +22,41 @@ CarsController.getAllCars = async (req, res) => {
 CarsController.newCar = async (req, res) => {
 
     let name = req.body.name;
-    let brand = req.body.brand;
+    let brand = req.body.brand;   
 
-    await Car.create({
-        name: name,
-        brand: brand
-    }).then(car => {
-        res.send({"Message": `El coche ${car.name} se ha añadido con éxito`})
-    }).catch(error => {console.log(error)});
+    try {
 
+        let result = await Car.create({name: name, brand: brand})
+
+        if(result?.name){
+            res.send({"Message": `El coche ${result.name} se ha añadido con éxito`})
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+        
 };
 
 CarsController.updateCar = async (req, res) => {
 
     let id = req.body.id;
     let newName = req.body.name;
+    let newBrand = req.body.brand;
     
     try {
-        await Car.findByIdAndUpdate(id, {
+
+        let result = await Car.findByIdAndUpdate(id, {
             $set: {
                 name: newName,
+                brand: newBrand
             }
         }).setOptions({ returnDocument: 'after' })
-            .then(carModified => {
-                res.send(carModified)
-            })
+
+        if(result?.name){
+            res.send(result)
+        }
+
     } catch (error) {
         console.log("Error updating car name", error);
     }
@@ -53,10 +66,11 @@ CarsController.deleteCar = async (req, res) => {
     let id = req.body.id;
 
     try {
-        await Car.findByIdAndDelete(id)
-            .then(coche => {
-                res.send({"Message": `El coche ${coche.name} se ha eliminado con éxito`})
-            })
+        
+        let result = await Car.findByIdAndDelete(id);
+
+        res.send({"Message": `El coche ${result.name} se ha eliminado con éxito`})
+        
     } catch (error) {
         console.log("Error deleting car", error);
        

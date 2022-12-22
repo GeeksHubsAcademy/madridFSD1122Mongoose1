@@ -22,18 +22,28 @@ UsersController.getAllUsers = async (req, res) => {
 
 UsersController.getUserById = async (req, res) => {
 
-    let id = req.params.id;
+    //Este id es el id que ha venido por parámetro en el endpoint (url)
+    let _id = req.params._id;
+    let user = req.user.usuario[0];
 
-    try {
+    //Estos datos de user son lo que el middleware auth ha decodificado del token ;)
+    if(_id !== user._id){
 
-        await User.findById(id)
-            .then(found => {
-                res.send(found);
-            })
-            
-    } catch (error){
-        console.log(error);
-    }   
+        res.send({"Msg":"Acceso no autorizado"});
+    }else{
+
+        res.send({
+
+            "id": user._id,
+            "name":user.name,
+            "surname":user.surname,
+            "dni":user.dni,
+            "email":user.email,
+            "phone":user.phone,
+            "nationality":user.nationality
+
+        });
+    }
 }
 
 UsersController.getUsersByName = async (req, res) => {

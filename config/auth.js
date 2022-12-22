@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    SECRET: "pA25RUHiLoPP", 
-    EXPIRES: "24h",
-    ROUNDS : 10
+    SECRET: process.env.SECRET || "tic tac toe ho ho ho", 
+    EXPIRES: process.env.EXPIRES || "24h",
+    ROUNDS : process.env.ROUNDS || 10
 };

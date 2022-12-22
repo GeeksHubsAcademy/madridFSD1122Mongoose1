@@ -6,13 +6,14 @@ const router = express.Router();
 
 //Importo el middleware de auth...
 const auth = require('../middlewares/auth');
+const isAdmin = require('../middlewares/isAdmin');
 
 const UsersController = require('../controllers/UsersController');
 
 //Endpoints
 
 router.get("/", UsersController.getAllUsers);
-router.get("/name/:name", UsersController.getUsersByName);
+router.post("/name", isAdmin, auth, UsersController.getUsersByName);
 
 router.post("/", UsersController.newUser);
 router.put("/", UsersController.updateUser);

@@ -52,7 +52,7 @@ UsersController.getUserById = async (req, res) => {
 
 UsersController.getUsersByName = async (req, res) => {
 
-    let name = req.params.name;
+    let name = req.body.name;
 
     try {
 
@@ -144,16 +144,18 @@ UsersController.loginUser = async (req, res) => {
             email: req.body.email
         })
 
-
+        
         if (userFound) {
+            
             if (userFound[0].email === undefined) {
                 //No hemos encontrado al usuario...mandamos un mensaje
                 res.send("Usuario o password incorrecto");
             } else {
+               
                 //Hemos encontrado al usuario, vamos a ver si el pass es correcto
-
+               
                 if (bcrypt.compareSync(req.body.password, userFound[0].password)) {
-
+                    
                     let token = jsonwebtoken.sign({ usuario: userFound }, authConfig.SECRET, {
                         expiresIn: authConfig.EXPIRES
                     });
@@ -166,7 +168,7 @@ UsersController.loginUser = async (req, res) => {
                     })
 
                 } else {
-
+              
                     res.send("Usuario o password incorrecto");
                 }
             }

@@ -32,6 +32,10 @@ const userSchema = new Schema ({
     },
     nationality: {
         type: String
+    },
+    rol: {
+        type: String,
+        required: false
     }
 
 });

@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
                 //Si la validación es correcta...
             } else {
                 //En req.user guardamos el usuario decodificado correctamente
-                req.user = decoded;
+                req.user = decoded.usuario[0];
                 //Activa el next() del middleware que actúa como un return, haciendo el que continúe en el endpoint donde lo metimos, y ejecutando así su función controladora
                 next();
             }

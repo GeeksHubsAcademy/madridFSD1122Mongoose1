@@ -121,15 +121,25 @@ UsersController.updateUser = async (req, res) => {
 
 UsersController.deleteUser = async (req, res) => {
     let dni = req.body.dni;
+    let userAdmin = req.user.usuario[0];
 
     try {
-        let deleted = await User.findOneAndDelete({
-            dni: dni
-        })
 
-        if (deleted) {
-            res.send({ "Message": `El usuario ${erased.name} ${erased.surname} se ha eliminado con éxito` })
+        if(userAdmin.dni !== dni){
+            let deleted = await User.findOneAndDelete({
+                dni: dni
+            })
+    
+            if (deleted) {
+                res.send({ "Message": `El usuario ${deleted.name} ${deleted.surname} se ha eliminado con éxito` })
+            } else {
+                res.send({"Message": "No hemos encontrado al usuario a borrar"});
+            }
+        }else{
+            res.send({"Message": `Deletion not possible`});
+
         }
+        
     } catch (error) {
         console.log("Error deleting user", error);
 
